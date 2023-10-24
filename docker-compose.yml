@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: ./simple-api-student-main
+      dockerfile: Dockerfile
+    container_name: project_simpleapi
+    networks:
+    - app-network
+    depends_on:
+    - database
+
+  database:
+    build:
+      context: ./Database
+      dockerfile: Dockerfile
+    container_name : post_gre_TP
+    networks:
+    - app-network
+
+  httpd:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    container_name: frontend_simple_api
+    ports:
+      - "80:80"
+    networks:
+    - app-network
+    depends_on:
+    - backend
+
+networks:
+  app-network:
